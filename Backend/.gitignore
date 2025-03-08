@@ -1,0 +1,23 @@
+# Ignora el archivo .env
+.env
+
+# Carpetas y archivos de Python compilados o generados
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entornos virtuales
+venv/
+.venv/
+
+# Archivos de configuración de IDEs
+.vscode/
+.idea/
+
+# Archivos de distribución
+build/
+dist/
+*.egg-info/
+
+# Logs
+*.log
