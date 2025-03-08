@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate QR</title>
+</head>
+<body>
+    <button id="generateQrButton">Generate QR</button>
+    <div id="qr-generator"></div> <!-- Añadido div para mostrar el QR -->
+
+    <script type="module">
+        document.getElementById('generateQrButton').addEventListener('click', async () => {
+            const data = {
+                qrType: "static",
+                amount: 100.10,
+                detail: "test postman GEO",
+            };
+
+            try {
+                const response = await fetch('http://localhost:8000/hackemate/generate-qr', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                console.log('QR generated:', result);
+
+                // Mostrar la imagen QR en el div con id qr-generator
+                const qrGeneratorDiv = document.getElementById('qr-generator');
+                qrGeneratorDiv.innerHTML = `<img src="${result.qr}" alt="Generated QR Code">`;
+
+            } catch (error) {
+                console.error('Error generating QR:', error);
+            }
+        });
+    </script>
+</body>
+</html>
