@@ -1,0 +1,20 @@
+services:
+  backend:
+    build:
+      context: ../
+      dockerfile: Compose/backend/Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - ../envs/backend.env
+    networks:
+      reto_de_una_network:
+        ipv4_address: 192.168.100.35
+
+networks:
+  reto_de_una_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24
+          gateway: 192.168.100.1
