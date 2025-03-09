@@ -1,7 +1,7 @@
 import requests as request
 import pydantic
 
-DE_UNA_QR = "https://apis-merchant.qa.deunalab.com/merchant/v1/payment/request"
+DE_UNA_QR = "https://apis-merchant.qa.deunalab.com/merchant/v1/payment/info"
 API_SECRET = "70aa3a0caa6341f88b67ebb167ef7a50"
 API_KEY = "9fd4ac9c11b6455fa7270dba42a135ff"
 

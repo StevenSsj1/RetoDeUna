@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from fastapi import APIRouter, HTTPException
-from ..supabase_client import supabase
+from ...supabase_client import supabase
 import bcrypt
 
 router = APIRouter(
