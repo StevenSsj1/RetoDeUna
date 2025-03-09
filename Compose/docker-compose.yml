@@ -5,9 +5,8 @@ services:
       dockerfile: Compose/backend/Dockerfile
     ports:
       - "8000:8000"
-    environment:
-      - SUPABASE_URL=https://sykaqvltjsiyjaujnvqf.supabase.co
-      - SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5a2Fxdmx0anNpeWphdWpudnFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE0NDcyMDMsImV4cCI6MjA1NzAyMzIwM30.46wxfAIb8x6HhjhFrVYXtokFlJqDeHLv_WqoEMIWJ-o
+    env_file:
+      - ../envs/backend.env
     networks:
       reto_de_una_network:
         ipv4_address: 192.168.100.35

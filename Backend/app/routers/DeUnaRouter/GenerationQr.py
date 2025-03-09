@@ -3,12 +3,9 @@ import pydantic
 from dotenv import load_dotenv
 import os
 
-dotenv_path = os.path.join(os.path.dirname(__file__), '..', '..', '.env')
-load_dotenv(dotenv_path)
-
-DE_UNA_QR = "https://apis-merchant.qa.deunalab.com/merchant/v1/payment/request"
-API_SECRET = "70aa3a0caa6341f88b67ebb167ef7a50"
-API_KEY = "9fd4ac9c11b6455fa7270dba42a135ff"
+DE_UNA_QR = os.getenv("REQUEST_QR")
+API_SECRET = os.getenv("API_SECRET")
+API_KEY = os.getenv("API_KEY")
 
 class GenerateQrRequest(pydantic.BaseModel):
     qrType: str
