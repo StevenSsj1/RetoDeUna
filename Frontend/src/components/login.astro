@@ -15,11 +15,15 @@
       </div>
       <button type="submit">Ingresar</button>
     </form>
+    <div class="register-container">
+      <p>¿No tienes cuenta?</p>
+      <button onclick="window.location.href='/register'">Registrarse</button>
+    </div>
   </div>
 </div>
 
 <script type="module">
-  const backendUrl = 'http://127.0.0.1:8000/hackemate';
+  const backendUrl = "http://127.0.0.1:8000/hackemate";
   const form = document.getElementById("login-form");
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -42,8 +46,19 @@
         alert(result.detail || "Error en el login");
       } else {
         alert("Login exitoso");
-        // Aquí puedes guardar la sesión o redirigir al usuario, por ejemplo:
-        // window.location.href = "/";
+        console.log(response)
+        console.log(result)
+        
+        // Guardar user_id y rol en localStorage
+        localStorage.setItem("user_id", result.user_id);
+        localStorage.setItem("rol", result.rol);
+
+        // Redirigir según el tipo de usuario
+        if (result.rol == "natural") {
+          window.location.href = "/natural";
+        } else {
+          window.location.href = "/comerciante";
+        }
       }
     } catch (error) {
       console.error("Error al conectar con el backend", error);

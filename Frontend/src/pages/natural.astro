@@ -1,0 +1,131 @@
+---
+const backendUrl = "http://127.0.0.1:8000/hackemate/generate-qr";
+---
+
+<div class="container">
+  <div class="qr-section">
+    <h2>Mi código QR</h2>
+    <img id="qrImage" src="/placeholder.png" alt="QR Code" class="qr-image" />
+    <p class="qr-info">Usa este QR para cobrar</p>
+  </div>
+
+  <form id="qr-form">
+    <div class="input-group">
+      <label for="amount">Precio</label>
+      <input type="number" id="amount" name="amount" step="0.01" min="0" placeholder="$0.00" required />
+    </div>
+
+    <div class="input-group">
+      <label for="detail">Detalle</label>
+      <input type="text" id="detail" name="detail" placeholder="Ingresa el detalle de la compra" required />
+    </div>
+
+    <button type="submit" class="btn">Generar QR</button>
+    <button type="button" class="btn secondary">Establecer Meta</button>
+    <button type="button" class="btn secondary">Estadísticas</button>
+  </form>
+</div>
+
+<script>
+  document.getElementById("qr-form")!.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const amount = document.getElementById("amount")!;
+    const detail = document.getElementById("detail")!;
+
+    // Recuperar el user_id del almacenamiento local (debe estar guardado después del login)
+    const userId = localStorage.getItem("user_id");
+
+    if (!userId) {
+      alert("Debes iniciar sesión para generar un QR.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/hackemate/generate-qr", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ qrType: "static", amount: parseFloat(amount), detail, user_id: userId }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        alert(result.detail || "Error al generar el QR");
+      } else {
+        document.getElementById("qrImage")!.src = result.qr_url;
+      }
+    } catch (error) {
+      console.error("Error al conectar con el backend", error);
+      alert("Error al conectar con el backend");
+    }
+  });
+</script>
+
+<style>
+  .container {
+    width: 90%;
+    max-width: 350px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  .qr-section h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .qr-image {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 10px;
+  }
+
+  .qr-info {
+    font-size: 12px;
+    color: #555;
+  }
+
+  .input-group {
+    margin: 15px 0;
+    text-align: left;
+  }
+
+  .input-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  .input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    background: #6d28d9;
+    color: white;
+  }
+
+  .btn.secondary {
+    background: #10b981;
+  }
+
+  .btn:hover {
+    opacity: 0.8;
+  }
+</style>

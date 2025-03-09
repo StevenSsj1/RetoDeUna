@@ -1,0 +1,10 @@
+---
+import RegisterForm from "@/components/register.astro";
+import MainLayout from "@/layouts/main.astro";
+const content = { title: "Registro" };
+const isLogin = true;
+---
+
+<MainLayout content={content} isLogin={isLogin}>
+  <RegisterForm />
+</MainLayout>

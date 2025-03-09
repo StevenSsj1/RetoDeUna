@@ -3,6 +3,10 @@ import pydantic
 from dotenv import load_dotenv
 import os
 from ...controllers.SupabaseController import transaction_supabase
+
+dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
+load_dotenv(dotenv_path)
+
 DE_UNA_QR = os.getenv("REQUEST_QR")
 API_SECRET = os.getenv("API_SECRET")
 API_KEY = os.getenv("API_KEY")
