@@ -41,20 +41,19 @@
       });
 
       const result = await response.json();
+      const { id, rol } = result.user
 
       if (!response.ok) {
         alert(result.detail || "Error en el login");
       } else {
         alert("Login exitoso");
-        console.log(response)
-        console.log(result)
         
         // Guardar user_id y rol en localStorage
-        localStorage.setItem("user_id", result.user_id);
-        localStorage.setItem("rol", result.rol);
+        localStorage.setItem("id", id);
+        localStorage.setItem("rol", rol);
 
         // Redirigir según el tipo de usuario
-        if (result.rol == "natural") {
+        if (rol == "natural") {
           window.location.href = "/natural";
         } else {
           window.location.href = "/comerciante";

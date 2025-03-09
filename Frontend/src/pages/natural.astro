@@ -1,65 +1,93 @@
 ---
-const backendUrl = "http://127.0.0.1:8000/hackemate/generate-qr";
+import MainLayout from "../layouts/main.astro";
+
+import "../styles/global.css"; // Aquí importas tu CSS global
+
+const content = { title: "Inicio - Deuna" };
 ---
 
-<div class="container">
-  <div class="qr-section">
-    <h2>Mi código QR</h2>
-    <img id="qrImage" src="/placeholder.png" alt="QR Code" class="qr-image" />
-    <p class="qr-info">Usa este QR para cobrar</p>
+<MainLayout content={content}>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <div class="container">
+    <div class="qr-section">
+      <h2>Mi código QR</h2>
+      <img id="qrImage" src="/placeholder.png" alt="QR Code" class="qr-image" />
+      <p class="qr-info">Usa este QR para cobrar</p>
+    </div>
+
+    <form id="qr-form">
+      <div class="input-group">
+        <label for="amount">Precio</label>
+        <input
+          type="number"
+          id="amount"
+          name="amount"
+          step="0.01"
+          min="0"
+          placeholder="$0.00"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="detail">Detalle</label>
+        <input
+          type="text"
+          id="detail"
+          name="detail"
+          placeholder="Ingresa el detalle de la compra"
+          required
+        />
+      </div>
+
+      <button type="submit" class="btn">Generar QR</button>
+    </form>
   </div>
+</MainLayout>
 
-  <form id="qr-form">
-    <div class="input-group">
-      <label for="amount">Precio</label>
-      <input type="number" id="amount" name="amount" step="0.01" min="0" placeholder="$0.00" required />
-    </div>
+<script type="module">
+  const backendUrl = "http://localhost:8000/hackemate/generate-qr";
 
-    <div class="input-group">
-      <label for="detail">Detalle</label>
-      <input type="text" id="detail" name="detail" placeholder="Ingresa el detalle de la compra" required />
-    </div>
+  document
+    .getElementById("qr-form")
+    .addEventListener("submit", async (event) => {
+      event.preventDefault();
 
-    <button type="submit" class="btn">Generar QR</button>
-    <button type="button" class="btn secondary">Establecer Meta</button>
-    <button type="button" class="btn secondary">Estadísticas</button>
-  </form>
-</div>
+      const amount = parseFloat(document.getElementById("amount").value);
+      const detail = document.getElementById("detail").value;
+      const userId = localStorage.getItem("id") || 10;
 
-<script>
-  document.getElementById("qr-form")!.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const amount = document.getElementById("amount")!;
-    const detail = document.getElementById("detail")!;
-
-    // Recuperar el user_id del almacenamiento local (debe estar guardado después del login)
-    const userId = localStorage.getItem("user_id");
-
-    if (!userId) {
-      alert("Debes iniciar sesión para generar un QR.");
-      return;
-    }
-
-    try {
-      const response = await fetch("http://127.0.0.1:8000/hackemate/generate-qr", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ qrType: "static", amount: parseFloat(amount), detail, user_id: userId }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        alert(result.detail || "Error al generar el QR");
-      } else {
-        document.getElementById("qrImage")!.src = result.qr_url;
+      if (!userId) {
+        alert("Debes iniciar sesión para generar un QR.");
+        return;
       }
-    } catch (error) {
-      console.error("Error al conectar con el backend", error);
-      alert("Error al conectar con el backend");
-    }
-  });
+
+      try {
+        const response = await fetch(backendUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            qrType: "static",
+            amount,
+            detail,
+            user_id: userId,
+          }),
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+          alert(result.detail || "Error al generar el QR");
+        } else {
+          document.getElementById("qrImage").src = result.qr;
+        }
+      } catch (error) {
+        console.error("Error generating QR:", error);
+      }
+    });
 </script>
 
 <style>
@@ -119,10 +147,6 @@ const backendUrl = "http://127.0.0.1:8000/hackemate/generate-qr";
     cursor: pointer;
     background: #6d28d9;
     color: white;
-  }
-
-  .btn.secondary {
-    background: #10b981;
   }
 
   .btn:hover {

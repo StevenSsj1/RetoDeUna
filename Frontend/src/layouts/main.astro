@@ -1,5 +1,6 @@
 ---
 import Menu from "../components/Menu.astro";
+
 const { content, isLogin } = Astro.props;
 ---
 
@@ -8,6 +9,7 @@ const { content, isLogin } = Astro.props;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta charset="UTF-8">
 		<title>{content.title}</title>
 
 		<!-- Íconos y Metadatos -->
@@ -23,6 +25,7 @@ const { content, isLogin } = Astro.props;
 
 		<!-- Estilos dinámicos -->
     	<link rel="stylesheet" href="/css/menu.css" />
+
 		{isLogin && <link rel="stylesheet" href="/css/login.css" />}
 	</head>
 	<body>

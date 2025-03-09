@@ -87,6 +87,20 @@ class AnalysisController:
         return chart_data
 
     def analyze_transactions_by_amount(self):
+        month_translation = {
+            "January": "Enero",
+            "February": "Febrero",
+            "March": "Marzo",
+            "April": "Abril",
+            "May": "Mayo",
+            "June": "Junio",
+            "July": "Julio",
+            "August": "Agosto",
+            "September": "Septiembre",
+            "October": "Octubre",
+            "November": "Noviembre",
+            "December": "Diciembre"
+        }
         current_date = datetime.utcnow()
         six_months_ago = current_date - timedelta(days=6*30)
 
@@ -97,8 +111,9 @@ class AnalysisController:
 
         daily_data = defaultdict(lambda: {"amount": 0})
         for transaction in filtered_transactions:
-            date = datetime.fromisoformat(transaction["date"]).strftime("%Y-%m-%d")
-            daily_data[date]["amount"] += transaction["amount"]
+            date = datetime.fromisoformat(transaction["date"]).strftime("%B")
+            month_spanish = month_translation[date]
+            daily_data[month_spanish]["amount"] += transaction["amount"]
         
-        chart_data = [{"date": date, "amount": data["amount"]} for date, data in daily_data.items()]
+        chart_data = [{"month": date, "amount": data["amount"]} for date, data in daily_data.items()]
         return chart_data
