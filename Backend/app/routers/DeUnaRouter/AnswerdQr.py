@@ -23,7 +23,7 @@ class AnswerdQrResponse(pydantic.BaseModel):
     ordererName: str
     ordererIdentification: str
 
-def answerd_qr(data: AnswerdQrRequest):
+def answerd_qr(data: AnswerdQrRequest) -> AnswerdQrResponse:
     try:
         headers = {
             "x-api-secret": API_SECRET,
@@ -35,6 +35,6 @@ def answerd_qr(data: AnswerdQrRequest):
         }
         response = request.post(DE_UNA_QR, json=payload, headers=headers)
         response_data = response.json()
-        return response_data
+        return AnswerdQrResponse(**response_data)
     except Exception as e:
         raise Exception(str(e))

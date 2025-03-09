@@ -2,7 +2,7 @@ import requests as request
 import pydantic
 from dotenv import load_dotenv
 import os
-
+from ...controllers.SupabaseController import transaction_supabase
 DE_UNA_QR = os.getenv("REQUEST_QR")
 API_SECRET = os.getenv("API_SECRET")
 API_KEY = os.getenv("API_KEY")
@@ -11,12 +11,14 @@ class GenerateQrRequest(pydantic.BaseModel):
     qrType: str
     amount: float
     detail: str
+    user_id: int 
 
 
 class GenerateQrResponse(pydantic.BaseModel):
     transactionId: str
     status: int
     qr: str
+    deeplink: str
 
 
 def generate_qr(data: GenerateQrRequest) -> GenerateQrResponse:
@@ -35,6 +37,10 @@ def generate_qr(data: GenerateQrRequest) -> GenerateQrResponse:
         }
         response = request.post(DE_UNA_QR, json=payload, headers=headers)
         response_data = response.json()
-        return response_data
+
+        supabase_controller = transaction_supabase.SupabaseController()
+        supabase_controller.save_transaction(data.amount, data.detail, response_data["transactionId"], data.user_id)
+
+        return GenerateQrResponse(**response_data)
     except Exception as e:
         raise Exception(str(e))
