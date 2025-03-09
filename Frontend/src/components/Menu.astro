@@ -1,0 +1,45 @@
+---
+const menuItems = [
+  { name: "Personas Naturales", link: "/natural" },
+  { name: "Empresas", link: "/comerciante" },
+];
+---
+
+<nav id="menu" class="navbar fixed-top">
+  <div class="container-lg">
+    <!-- Menú en dispositivos móviles -->
+    <button class="navbar-toggler" id="menu-toggle">
+      ☰
+    </button>
+    <a class="navbar-brand" href="/">
+      <img src="/deunalogo.png" alt="Deuna">
+    </a>
+
+    <!-- Links de navegación -->
+    <ul class="navbar-nav" id="menu-items">
+      {menuItems.map((item) => (
+        <li class="nav-item">
+          <a class="nav-link" href={item.link}>{item.name}</a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Botón de descarga -->
+    <a class="btn btn-header-descarga" href="https://deuna.onelink.me/OrBb/c5ehnp34">
+      Descargar <b>Deuna</b>
+    </a>
+  </div>
+</nav>
+
+<style>
+    img {
+        width: 100px;
+        height: auto;
+    }
+</style>
+
+<script>
+  document.getElementById('menu-toggle')!.addEventListener('click', () => {
+    document.getElementById('menu-items')!.classList.toggle('open');
+  });
+</script>

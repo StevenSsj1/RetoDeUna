@@ -1,0 +1,76 @@
+---
+const products = [
+    {
+        title: "Datos Estadísticos para Personas Naturales",
+        description:
+            "Consulta tus gastos mensuales de manera sencilla y visualiza en qué estás invirtiendo tu dinero.",
+        image: "/persona-natural.jpg",
+    },
+    {
+        title: "Datos Estadísticos para Empresas",
+        description:
+            "Accede a estadísticas detalladas sobre ventas diarias, semanales, mensuales, trimestrales y anuales.",
+        image: "/empresa.png",
+    },
+];
+---
+
+<section class="product-section">
+    <div class="product-container">
+        {
+            products.map((product) => (
+                <div class="product-card">
+                    <img
+                        src={product.image}
+                        alt={product.title}
+                        class="product-icon"
+                    />
+                    <h3>{product.title}</h3>
+                    <p>{product.description}</p>
+                </div>
+            ))
+        }
+    </div>
+</section>
+
+<style>
+    .product-section {
+        background: #e8faf4;
+        padding: 50px 20px;
+        text-align: center;
+    }
+
+    .product-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .product-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        width: 280px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-icon {
+        width: 80px;
+        height: auto;
+        margin-bottom: 15px;
+    }
+
+    h3 {
+        font-size: 18px;
+        color: #333;
+    }
+
+    p {
+        font-size: 14px;
+        color: #555;
+    }
+</style>

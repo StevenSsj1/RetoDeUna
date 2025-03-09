@@ -1,10 +1,10 @@
 ---
-import Layout from "@/layouts/login.astro";
 import LoginForm from "@/components/login.astro";
-
-const pageTitle = "Login";
+import MainLayout from "@/layouts/main.astro";
+const content = { title: "Iniciar Sesión" };
+const isLogin = true;
 ---
 
-<Layout page={pageTitle}>
+<MainLayout content={content} isLogin={isLogin}>
   <LoginForm />
-</Layout>
+</MainLayout>

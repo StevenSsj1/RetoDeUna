@@ -8,7 +8,7 @@
   
   body {
     font-family: Arial, sans-serif;
-    background-color: #494949;
+    background-color: #ffffff;
     margin: 0;
     padding: 0;
   }
@@ -33,11 +33,11 @@
   
   .login,
   .index {
-    background-color: #333333;
+    background-color: #d9d9d9;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0px 0px 10px 0px rgba(99, 98, 98, 0.75);
-    color: white;
+    color: black;
     transition: margin-top 0.3s ease;
   }
   
@@ -74,9 +74,9 @@
     padding: 8px 16px;
     border-radius: 6px;
     font-size: 13px;
-    background: #373737;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
     color: #fff;
+    background: #5a5a5a;
     cursor: pointer;
     border: 2px solid transparent;
     transition: all 0.4s ease;
@@ -124,6 +124,16 @@
   
   .login label {
     font-size: 18px;
+  }
+
+  .login {
+    text-align: center;
+  }
+
+  .login-image {
+    width: 300px; /* Ajusta el tamaño de la imagen */
+    height: auto;
+    margin-bottom: 10px; /* Espaciado entre la imagen y el texto */
   }
   
   @media (max-width: 600px) {

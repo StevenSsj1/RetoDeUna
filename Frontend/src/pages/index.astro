@@ -1,25 +1,59 @@
 ---
-import '../styles/global.css';
-// Component Imports
-import Button from '../components/Button.astro';
+import MainLayout from "../layouts/main.astro";
+import ProductInfo from "../components/index.astro";
 
-// Full Astro Component Syntax:
-// https://docs.astro.build/basics/astro-components/
+const content = { title: "Inicio - Deuna" };
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro + TailwindCSS</title>
-	</head>
+<MainLayout content={content}>
+  <section class="home-banner">
+    <div class="home-text">
+      <h1>Controla tu dinero con Deuna</h1>
+      <p>Visualiza y gestiona tus estadísticas de gastos y ventas con herramientas avanzadas.</p>
+    </div>
+    <!-- <img src="/assets/img/phone-dashboard.png" alt="Deuna App" class="home-image" />-->
+  </section>
 
-	<body>
-		<div class="grid place-items-center h-screen content-center">
-			<Button>Tailwind Button in Astro!</Button>
-			<a href="/markdown-page" class="p-4 underline">Markdown is also supported...</a>
-		</div>
-	</body>
-</html>
+  <ProductInfo />
+</MainLayout>
+
+<style>
+.home-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 20px;
+  background: #f8f9fc;
+}
+
+.home-text {
+  max-width: 500px;
+}
+
+.home-text h1 {
+  font-size: 28px;
+  color: #333;
+}
+
+.home-text p {
+  font-size: 16px;
+  color: #666;
+}
+
+.home-image {
+  width: 300px;
+  margin-left: 30px;
+}
+
+@media (max-width: 768px) {
+  .home-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .home-image {
+    margin-left: 0;
+    margin-top: 20px;
+  }
+}
+</style>
+
